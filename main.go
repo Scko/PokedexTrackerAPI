@@ -62,7 +62,13 @@ func main(){
 	router.HandleFunc("/pokemon/{id}", CreatePokemon).Methods("POST")
 	router.HandleFunc("/pokemon/{id}", DeletePokemon).Methods("DELETE")
 	
-	log.Fatal(http.ListenAndServe(":8080", router))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	log.Printf("listening on port %v\n", port)
+
+	log.Fatal(http.ListenAndServe(":"+port, router))
 	
 	
 }
