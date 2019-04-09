@@ -8,6 +8,7 @@ import (
 	"strconv"
 	//"io/ioutil"
 	//"fmt"
+	"os"
 )
 
 type PokeAPI struct {
