@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/handlers"
 	"strconv"
 	//"io/ioutil"
 	//"fmt"
@@ -63,13 +64,15 @@ func main(){
 	router.HandleFunc("/pokemon/{id}", CreatePokemon).Methods("POST")
 	router.HandleFunc("/pokemon/{id}", DeletePokemon).Methods("DELETE")
 	
+	corsObj := handlers.AllowedOrigins([]string{"*"})
+	
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
 	log.Printf("listening on port %v\n", port)
 
-	log.Fatal(http.ListenAndServe(":"+port, router))
+	log.Fatal(http.ListenAndServe(":"+port, handlers.CORS(corsObj)(router)))
 	
 	
 }
